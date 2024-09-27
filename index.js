@@ -20,5 +20,40 @@ function displayHelp() {
         Example: math-operations -add 9.7 2.8
         `);
     process.exit(0);
+  }
+
+let i = 0;
+while(i < args.length) {
+  const arg = args[i];
+  switch (arg) {
+      case "-help":
+          displayHelp();
+          break;
+          case "-add":
+          case "-subtract":
+          case "-multiply":
+          case "-divide":
+              operators = arg;
+              if (i + 2 >= args.length) {
+              console.error("Error: You need two decimal numbers");
+              process.exit(1);
+              }
+              Num1 = parseFloat(args[++i]);
+              Num2 = parseFloat(args[++i]);
+              if (isNaN(Num1) || isNaN(Num2)) {
+              console.error("Error: Both must be valid numbers");
+              process.exit(1);
+              }
+              break;
+          default:
+              console.error("Error: Invalid Option in the '${arg}'");
+              displayHelp();
+  }
+  i++;
 }
 
+if (!operators) {
+    console.error("Error: No operation provided.");
+    displayHelp();
+}
+    
