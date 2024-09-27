@@ -2,10 +2,12 @@
 
 const args = process.argv.slice(2);
 
+// Default values //
 let operators = false;
 let Num1 = false;
 let Num2 = false;
 
+// This is the help display message //
 function displayHelp() {
     console.log(`
     Default Bin Words: math-operations
@@ -22,6 +24,7 @@ function displayHelp() {
     process.exit(0);
   }
 
+// Code for the arguments to setup the numbers and operators. //
 let i = 0;
 while(i < args.length) {
   const arg = args[i];
@@ -52,8 +55,32 @@ while(i < args.length) {
   i++;
 }
 
+// Small Error message incase no operator is provided //
 if (!operators) {
-    console.error("Error: No operation provided.");
+    console.error("Error: No operator provided");
     displayHelp();
 }
-    
+
+// Actual Function to generate the calculation //
+function generateMath(operators,Num1,Num2) {
+  switch (operators) {
+    case "-add":
+      return Num1 + Num2;
+    case "-subtract":
+      return Num1 - Num2;
+    case "-multiply":
+      return Num1 * Num2;
+    case "-divide":
+      if (Num2 === 0) {
+        console.error("Error: Division by zero is not allowed");
+        process.exit(1);
+      }
+      return Num1 / Num2;
+      default:
+      console.error("Error: Invalid operator used");
+      displayHelp();
+  }
+}
+
+const answer = generateMath(operators,Num1,Num2);
+console.log(`The answer is : ${answer}`);
